@@ -1,38 +1,36 @@
-import { useState } from "react";
+import { BrowserRouter, Navigate, Route, Routes } from 'react-router-dom'
 
-import AllMeetupsPage from "./pages/AllMeetupsPage";
-import FavoritesPage from "./pages/Favorites";
-import NewMeetupsPage from "./pages/NewMeetup";
-import { ALL_MEETUP_PAGE, FAVORITES_PAGE, NEW_MEETUP_PAGE } from "./utils/constants";
+import AllMeetupsPage from './pages/AllMeetupsPage'
+import FavoritesPage from './pages/Favorites'
+import NewMeetupsPage from './pages/NewMeetup'
 
-import MainNavigation from "./components/layout/MainNavigation";
-import Layout from "./components/layout/Layout";
+import MainNavigation from './components/layout/MainNavigation'
+import Layout from './components/layout/Layout'
+import { Provider } from 'react-redux'
+import store from './store/store'
 
 function App() {
-  const [page, setPage] = useState(ALL_MEETUP_PAGE);
-
-  function getCurrentPageComponent() {
-    let currentPageComponent = <AllMeetupsPage />;
-    switch (page) {
-      case FAVORITES_PAGE:
-        currentPageComponent = <FavoritesPage />;
-        break;
-      case NEW_MEETUP_PAGE:
-        currentPageComponent = <NewMeetupsPage />;
-        break;
-      default:
-        currentPageComponent = <AllMeetupsPage />;
-    }
-
-    return currentPageComponent;
-  }
-
   return (
-    <div data-test="app">
-      <MainNavigation setPage={setPage} />
-      <Layout>{getCurrentPageComponent()}</Layout>
-    </div>
-  );
+    <Provider store={store}>
+      <div data-test='app'>
+        <BrowserRouter>
+          <MainNavigation />
+          <Routes>
+            <Route path='/' element={<Layout />}>
+              <Route path='all-meetups' element={<AllMeetupsPage />} />
+              <Route path='new-meetups' element={<NewMeetupsPage />} />
+              <Route path='favorites' element={<FavoritesPage />} />
+              <Route path='' element={<Navigate to='/all-meetups' replace />} />
+              <Route
+                path='*'
+                element={<Navigate to='/all-meetups' replace />}
+              />
+            </Route>
+          </Routes>
+        </BrowserRouter>
+      </div>
+    </Provider>
+  )
 }
 
-export default App;
+export default App
