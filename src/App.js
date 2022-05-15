@@ -4,17 +4,16 @@ import AllMeetupsPage from './pages/AllMeetupsPage'
 import FavoritesPage from './pages/Favorites'
 import NewMeetupsPage from './pages/NewMeetup'
 
-import MainNavigation from './components/layout/MainNavigation'
 import Layout from './components/layout/Layout'
 import { Provider } from 'react-redux'
 import store from './store/store'
 
 function App() {
+
   return (
     <Provider store={store}>
       <div data-test='app'>
         <BrowserRouter>
-          <MainNavigation />
           <Routes>
             <Route path='/' element={<Layout />}>
               <Route path='all-meetups' element={<AllMeetupsPage />} />
