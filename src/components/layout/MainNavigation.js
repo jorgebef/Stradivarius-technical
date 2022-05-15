@@ -1,32 +1,51 @@
-import { ALL_MEETUP_PAGE, FAVORITES_PAGE, NEW_MEETUP_PAGE } from "./../../utils/constants";
+import { useEffect } from 'react'
+import { useSelector } from 'react-redux'
+import { NavLink } from 'react-router-dom'
 
-import classes from "./MainNavigation.module.css";
+import classes from './MainNavigation.module.css'
 
-export default function MainNavigation({ setPage }) {
+export default function MainNavigation() {
+  const { favsIdArray } = useSelector(state => state.favorites)
+
+  useEffect(() => {
+    // store in localstorage every time the favorites array changes
+    // this allows the favorites to persist in localstorage
+    localStorage.setItem('favorites', JSON.stringify(favsIdArray))
+  }, [favsIdArray])
+
+  // Create custom nav link so that will have the active property when the
+  // linked page is active or hovered
+  const CustomNavLink = props => {
+    return (
+      <NavLink
+        {...props}
+        className={({ isActive }) => (isActive ? classes.active : null)}
+      >
+        {props.children}
+      </NavLink>
+    )
+  }
+
   return (
-    <header className={classes.header} data-test="navigation-header">
+    <header className={classes.header} data-test='navigation-header'>
       <div className={classes.logo}>React Meetups</div>
       <nav>
         <ul>
           <li>
-            <a href="#" onClick={() => setPage(ALL_MEETUP_PAGE)}>
-              All Meetups
-            </a>
+            <CustomNavLink to='all-meetups'>All Meetups</CustomNavLink>
           </li>
 
           <li>
-            <a href="#" onClick={() => setPage(NEW_MEETUP_PAGE)}>
-              Add New Meetup
-            </a>
+            <CustomNavLink to='new-meetups'>Add New Meetup</CustomNavLink>
           </li>
           <li>
-            <a href="#" onClick={() => setPage(FAVORITES_PAGE)}>
+            <CustomNavLink to='favorites'>
               My Favorites
-              <span className={classes.badge}>{0}</span>
-            </a>
+              <span className={classes.badge}>{favsIdArray.length}</span>
+            </CustomNavLink>
           </li>
         </ul>
       </nav>
     </header>
-  );
+  )
 }
