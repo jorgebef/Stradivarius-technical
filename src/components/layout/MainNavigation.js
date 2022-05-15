@@ -4,7 +4,7 @@ import { NavLink } from 'react-router-dom'
 
 import classes from './MainNavigation.module.css'
 
-export default function MainNavigation() {
+export default function MainNavigation({ show }) {
   const { favsIdArray } = useSelector(state => state.favorites)
 
   useEffect(() => {
@@ -27,7 +27,11 @@ export default function MainNavigation() {
   }
 
   return (
-    <header className={classes.header} data-test='navigation-header'>
+    <header
+      className={classes.header}
+      style={{ top: show ? 0 : '-100%' }}
+      data-test='navigation-header'
+    >
       <div className={classes.logo}>React Meetups</div>
       <nav>
         <ul>
