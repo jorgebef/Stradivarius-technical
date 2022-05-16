@@ -5,7 +5,7 @@ import App from './App'
 describe('testing main App', () => {
   test('renders App', () => {
     render(<App />)
-    const app = screen.getByText(/react meetups/i)
+    const app = screen.getByText('React Meetups')
     expect(app).toBeInTheDocument()
   })
 })
