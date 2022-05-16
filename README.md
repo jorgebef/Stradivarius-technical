@@ -1,33 +1,18 @@
-# Getting Started with Create React App
+# Prueba técnica
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
-
-## Available Scripts
-
-In the project directory, you can run:
+## Scripts
 
 ### `npm start`
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
-
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+Se iniciará en modo desarrollo en [http://localhost:3000](http://localhost:3000)
 
 ### `npm test`
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+Inicia los test implementados en modo interactivo
 
 ### `npm run build`
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
-
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
-
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+Produce la app a una carpeta 'build'
 
 ### `npm run eject`
 
@@ -39,32 +24,41 @@ Instead, it will copy all the configuration files and the transitive dependencie
 
 You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
 
-## Learn More
+## Razonamiento
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+En el proyecto se han implementado las soluciones requeridas:
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+### Header con animación
 
-### Code Splitting
+Para el header se ha conseguido que al hacer scroll down, se oculte desplazándose hacia arriba y desapareciendo pero al hacer scroll up vuelve a aparecer para una fácil navegación por las distintas páginas.
+Además, se ha implementado el uso de una letra más llamativa (blanco más grueso) para el link a la página actualmente activa para un más fácil reconocimiento visual de dónde nos encontramos.
+Simplemente se ha modificado algo la estructura del componente responsable y usado los estilos existentes para mantener una homogeneidad visual.
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
+Para mejorar, podría implementar una forma diferente de visualizar el header en pantallas más pequeñas basado en el tamaño del viewport, pero he dedidido no hacerlo basado en el enunciado de la prueba.
 
-### Analyzing the Bundle Size
+### Header con navegación a distintas rutas
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
+En el header se ha implementado la capacidad de, al hacer click en cada link, nos lleva a una ruta diferente que se muestra en la url.
+Para esto he usado React-Router, el cual permite además redireccionar cualquier página que no esté estrictamente contemplada a `/all-meetups` para mejor y más fácil uso.
 
-### Making a Progressive Web App
+### Añadir favoritos
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
+Se ha implementado la funcionalidad de añadir a favoritos, el cual permite al hacer click en el botón de una meetup, añadir a la lista de favoritos.
+Los favoritos seleccionados se muestran en la página de favoritos y el número de estos meetups se muestra siempre de forma dinámica en el header.
+Además, si un meetup está ya seleccionado como favorito, el botón contiene un texto diferente y al pulsarlo, se elimina de favoritos.
 
-### Advanced Configuration
+Para la implementación de la lógica se ha optado por usar Redux creando una store y un slice para favoritos con su respectiva funcionalidad.
+En este caso, he usado Redux ya que el manejo de el objeto de favoritos así puede ser utilizado por todos los componentes y sería algo más eficiente que el Context API en mi opinión.
+Sin embargo, para el formulario de crear un nuevo meetup, he optado por usar UseState, ya que es más sencillo y evitamos complejidad innecesaria.
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
+### Tests
 
-### Deployment
+He optado por realizar diversos tests unitarios de varios componentes para comprobar que renderizan correctamente y la funionalidad es la deseada.
+Al no disponer de mucho tiempo, no he desarrollado mucho más allá, pero podrían realizarse tests más en profundidad y estudiar casos peculiares con más detenimiento.
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
+### Otros
 
-### `npm run build` fails to minify
+He implementado la lógica para crear un nuevo meetup desde la página correspondiente, la cual hace un POST request a un mock api que he creado para este proyecto.
+También los datos son obtenidos de dicho mock api para mostrar la fácil implementación de cualquier servidor usando el custom hook `useFetch`.
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+Personalmente para este proyecto opinaría que usar Typescript podría haber supuesto mejoras tanto de estandarización como homogeneidad en el código ya que nos ofrece tipados y checkeo de errores superior a lo actualmente implementado.
