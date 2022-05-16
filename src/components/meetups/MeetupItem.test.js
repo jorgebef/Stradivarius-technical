@@ -1,8 +1,10 @@
-/* eslint-disable testing-library/no-debugging-utils */
-import { shallow } from "enzyme";
-import MeetupItem from "./MeetupItem";
+import { render, screen } from '@testing-library/react'
+import MeetupItem from './MeetupItem'
 
-test("<MeetupItem/> renders without crashing", () => {
-  const wrapper = shallow(<MeetupItem />);
-  expect(wrapper.exists()).toBe(true);
-});
+describe('testing main App', () => {
+  test('renders App', () => {
+    render(<MeetupItem />)
+    const app = screen.getByText(/react meetups/i)
+    expect(app).toBeInTheDocument()
+  })
+})
