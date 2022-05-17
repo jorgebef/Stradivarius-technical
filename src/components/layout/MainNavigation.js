@@ -11,6 +11,7 @@ export default function MainNavigation({ show }) {
     // store in localstorage every time the favorites array changes
     // this allows the favorites to persist in localstorage
     localStorage.setItem('favorites', JSON.stringify(favsIdArray))
+    localStorage.setItem('favoritesTimeStamp', JSON.stringify(Date.now()))
   }, [favsIdArray])
 
   // Create custom nav link so that will have the active property when the

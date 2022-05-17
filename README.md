@@ -47,18 +47,18 @@ Se ha implementado la funcionalidad de añadir a favoritos, el cual permite al h
 Los favoritos seleccionados se muestran en la página de favoritos y el número de estos meetups se muestra siempre de forma dinámica en el header.
 Además, si un meetup está ya seleccionado como favorito, el botón contiene un texto diferente y al pulsarlo, se elimina de favoritos.
 
-Para la implementación de la lógica se ha optado por usar Redux creando una store y un slice para favoritos con su respectiva funcionalidad.
-En este caso, he usado Redux ya que el manejo de el objeto de favoritos así puede ser utilizado por todos los componentes y sería algo más eficiente que el Context API en mi opinión.
-Sin embargo, para el formulario de crear un nuevo meetup, he optado por usar UseState, ya que es más sencillo y evitamos complejidad innecesaria.
+También he implementado guardar en localStorage los favoritos para que persistan entre sesiones con un máximo de tiempo de 60 min, tras el cual, caducará y se reseteará.
+
+Para la implementación de la lógica se ha optado por usar Redux creando una store y un slice para favoritos con su respectiva funcionalidad simplemente para mostrar su uso aunque se podría haber usado useContext con un useReducer.
+Sin embargo, para el formulario de crear un nuevo meetup, he optado por usar UseState, ya que es más sencillo y para mostrar una tecnología diferente y mi capacidad para usarla.
 
 ### Tests
 
 He optado por realizar diversos tests unitarios de varios componentes para comprobar que renderizan correctamente y la funionalidad es la deseada.
+He implementado un test para el useFetch hook haciendo un mock al fetch de los datos con react-query, comprobando que efectivamente, funciona tal y como se espera.
 Al no disponer de mucho tiempo, no he desarrollado mucho más allá, pero podrían realizarse tests más en profundidad y estudiar casos peculiares con más detenimiento.
 
 ### Otros
 
 He implementado la lógica para crear un nuevo meetup desde la página correspondiente, la cual hace un POST request a un mock api que he creado para este proyecto.
 También los datos son obtenidos de dicho mock api para mostrar la fácil implementación de cualquier servidor usando el custom hook `useFetch`.
-
-Personalmente para este proyecto opinaría que usar Typescript podría haber supuesto mejoras tanto de estandarización como homogeneidad en el código ya que nos ofrece tipados y checkeo de errores superior a lo actualmente implementado.

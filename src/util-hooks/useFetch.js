@@ -1,34 +1,8 @@
-import { useState, useEffect } from 'react'
+import { useQuery } from 'react-query'
 
 export const useFetch = options => {
-  const [data, setData] = useState(null)
-
-  useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const res = await fetch(options.url)
-        const resData = await res.json()
-        setData(resData)
-      } catch (e) {
-        console.log(e)
-      }
-    }
-    fetchData()
-  }, [options.url])
-
-  const addMeetup = async inputData => {
-    await fetch(options.url, {
-      headers: {
-        Accept: 'application/json',
-        'Content-Type': 'application/json',
-      },
-      method: 'POST',
-      body: JSON.stringify({ ...inputData }),
-    })
-  }
-
-  return {
-    data,
-    addMeetup,
-  }
+  // Use React Query to cache the data for 4 minutes
+  return useQuery('data', () => fetch(options.url).then(res => res.json()), {
+    cacheTime: 4 * 1000 * 60,
+  })
 }

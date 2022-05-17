@@ -3,6 +3,13 @@ import { setupServer } from 'msw/node'
 import { useFetch } from '../util-hooks/useFetch'
 import { renderHook } from '@testing-library/react-hooks'
 
+import { QueryClientProvider, QueryClient } from 'react-query'
+
+const queryClient = new QueryClient()
+const wrapper = ({ children }) => (
+  <QueryClientProvider client={queryClient}>{children}</QueryClientProvider>
+)
+
 describe('testing useFetchHook', () => {
   const mockData = [
     {
@@ -47,8 +54,9 @@ describe('testing useFetchHook', () => {
   afterAll(() => server.close())
 
   test('useFetch works and returns expected Data', async () => {
-    const { result, waitForNextUpdate } = renderHook(() =>
-      useFetch({ url: url })
+    const { result, waitForNextUpdate } = renderHook(
+      () => useFetch({ url: url }),
+      { wrapper }
     )
     await waitForNextUpdate()
     expect(result.current.data).toEqual(mockData)

@@ -1,27 +1,19 @@
-import MeetupItem from '../components/meetups/MeetupItem'
+import MeetupList from '../components/meetups/MeetupList'
 import { useFetch } from '../util-hooks/useFetch'
-import classes from './../components/meetups/MeetupList.module.css'
 
 export default function AllMeetupsPage() {
   // One single call to the data endpoint instead of calling for each card
-  const { data } = useFetch({
+  const { data, isLoading, error } = useFetch({
     url: 'https://62813aef1020d8520586e92e.mockapi.io/meetups',
   })
 
-  if (!data) return <p>Loading...</p>
+  if (isLoading) return <p>Loading...</p>
+  if (error) return <p>An error has ocurred: {error.message}</p>
 
   return (
     <section>
       <h1>All Meetups</h1>
-      {data.length > 0 ? (
-        <ul className={classes.list}>
-          {data.map(item => (
-            <MeetupItem key={item.id} item={item} />
-          ))}
-        </ul>
-      ) : (
-        <p>No Meetups</p>
-      )}
+      <MeetupList data={data} />
     </section>
   )
 }
