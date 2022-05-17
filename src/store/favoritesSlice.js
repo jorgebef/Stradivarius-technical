@@ -3,10 +3,8 @@ import { createSlice } from '@reduxjs/toolkit'
 const getSavedState = () => {
   const serializedState = localStorage.getItem('favorites')
   const savedTimeStamp = localStorage.getItem('favoritesTimeStamp')
-  console.log('SAVED TIMESTAMP: ' + savedTimeStamp)
   // Check if the stored favorites are older than 60 min
   if (Number(Date.now()) - Number(savedTimeStamp) < 1000 * 60 * 60) {
-    console.log(Date.now() - savedTimeStamp)
     return serializedState ? JSON.parse(serializedState) : []
   } else {
     return []
